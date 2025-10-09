@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RanzCloud - Layanan Hosting & VPS Terpercaya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #334155;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #06b6d4;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #06b6d4;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #06b6d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0891b2;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #06b6d4;
+            border: 1px solid #06b6d4;
+        }
+
+        .btn-secondary:hover {
+            background: #06b6d4;
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+            border-radius: 1rem;
+            margin: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #06b6d4;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .product-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #334155;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2);
+        }
+
+        .product-category {
+            background: #06b6d4;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #06b6d4;
+        }
+
+        .product-description {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        /* Forms */
+        .form-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: rgba(30, 41, 59, 0.8);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid #334155;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #06b6d4;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            color: #e2e8f0;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .admin-tab {
+            padding: 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .admin-tab.active {
+            color: #06b6d4;
+            border-bottom-color: #06b6d4;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .payment-method {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover,
+        .payment-method.selected {
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        /* Chat */
+        .chat-container {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 1rem;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            margin: 2rem 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            border-bottom: 1px solid #334155;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            max-width: 70%;
+        }
+
+        .chat-message.user {
+            background: #06b6d4;
+            margin-left: auto;
+            color: white;
+        }
+
+        .chat-message.admin {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #334155;
+        }
+
+        .chat-input-container {
+            display: flex;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            color: #e2e8f0;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #ef4444;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 1px solid #334155;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+
+            .chat-message {
+                max-width: 90%;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        .table th {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+        }
+
+        .btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            margin: 0 0.25rem;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo" onclick="showPage('home')">RanzCloud</a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showPage('home')">Beranda</a></li>
+                <li><a href="#" onclick="showPage('products')">Produk</a></li>
+                <li><a href="#" onclick="showPage('chat')">Chat</a></li>
+                <li><a href="#" onclick="showPage('contact')">Kontak</a></li>
+            </ul>
+
+            <div class="auth-buttons" id="authButtons">
+                <a href="#" class="btn btn-secondary" onclick="showPage('login')">Login</a>
+                <a href="#" class="btn btn-primary" onclick="showPage('register')">Daftar</a>
+            </div>
+
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="container">
+                <div class="hero">
+                    <h1>Selamat Datang di RanzCloud</h1>
+                    <p>Penyedia layanan hosting SA-MP, Bot JS, VPS, Domain, dan RDP terpercaya dengan harga terjangkau</p>
+                    <a href="#" class="btn btn-primary" onclick="showPage('products')">Lihat Produk</a>
+                </div>
+
+                <div class="products-grid" id="featuredProducts">
+                    <!-- Featured products will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Page -->
+        <div id="products" class="page">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #06b6d4;">Katalog Produk</h2>
+                <div class="products-grid" id="allProducts">
+                    <!-- All products will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login" class="page">
+            <div class="container">
+                <div class="form-container">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: #06b6d4;">Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" id="loginUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="register" class="page">
+            <div class="container">
+                <div class="form-container">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: #06b6d4;">Daftar Akun</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="regUsername">Username</label>
+                            <input type="text" id="regUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">Email</label>
+                            <input type="email" id="regEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <input type="password" id="regPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regConfirmPassword">Konfirmasi Password</label>
+                            <input type="password" id="regConfirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Daftar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin" class="page">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #06b6d4;">Admin Panel</h2>
+                
+                <div class="admin-panel">
+                    <div class="admin-tabs">
+                        <div class="admin-tab active" onclick="showAdminTab('products')">Kelola Produk</div>
+                        <div class="admin-tab" onclick="showAdminTab('payments')">Metode Pembayaran</div>
+                        <div class="admin-tab" onclick="showAdminTab('orders')">Pesanan</div>
+                    </div>
+
+                    <!-- Products Management -->
+                    <div id="admin-products" class="admin-content active">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h3>Kelola Produk</h3>
+                            <button class="btn btn-primary" onclick="showAddProductForm()">Tambah Produk</button>
+                        </div>
+
+                        <div id="addProductForm" class="hidden" style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+                            <h4 style="margin-bottom: 1rem; color: #06b6d4;">Tambah/Edit Produk</h4>
+                            <form id="productForm">
+                                <input type="hidden" id="editProductId">
+                                <div class="form-group">
+                                    <label for="productName">Nama Produk</label>
+                                    <input type="text" id="productName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productCategory">Kategori</label>
+                                    <select id="productCategory" required>
+                                        <option value="Hosting SA-MP">Hosting SA-MP</option>
+                                        <option value="Hosting Bot JS">Hosting Bot JS</option>
+                                        <option value="VPS">VPS</option>
+                                        <option value="Domain">Domain</option>
+                                        <option value="RDP">RDP</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productDescription">Deskripsi</label>
+                                    <textarea id="productDescription" rows="3" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productPrice">Harga (Rp)</label>
+                                    <input type="number" id="productPrice" required>
+                                </div>
+                                <div style="display: flex; gap: 1rem;">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-secondary" onclick="hideAddProductForm()">Batal</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Kategori</th>
+                                    <th>Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsList">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Payment Methods Management -->
+                    <div id="admin-payments" class="admin-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h3>Metode Pembayaran</h3>
+                            <button class="btn btn-primary" onclick="showAddPaymentForm()">Tambah Metode</button>
+                        </div>
+
+                        <div id="addPaymentForm" class="hidden" style="background: rgba(15, 23, 42, 0.8); padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+                            <h4 style="margin-bottom: 1rem; color: #06b6d4;">Tambah/Edit Metode Pembayaran</h4>
+                            <form id="paymentForm">
+                                <input type="hidden" id="editPaymentId">
+                                <div class="form-group">
+                                    <label for="paymentName">Nama E-Wallet</label>
+                                    <input type="text" id="paymentName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="paymentNumber">Nomor</label>
+                                    <input type="text" id="paymentNumber" required>
+                                </div>
+                                <div style="display: flex; gap: 1rem;">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-secondary" onclick="hideAddPaymentForm()">Batal</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>E-Wallet</th>
+                                    <th>Nomor</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminPaymentsList">
+                                <!-- Payment methods will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Orders Management -->
+                    <div id="admin-orders" class="admin-content">
+                        <h3 style="margin-bottom: 2rem;">Pesanan</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Produk</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersList">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Page -->
+        <div id="chat" class="page">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #06b6d4;">Chat dengan Admin</h2>
+                
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Chat messages will appear here -->
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Ketik pesan Anda...">
+                        <button class="btn btn-primary" onclick="sendMessage()">Kirim</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #06b6d4;">Kontak Kami</h2>
+                
+                <div style="max-width: 600px; margin: 0 auto; background: rgba(30, 41, 59, 0.8); padding: 2rem; border-radius: 1rem;">
+                    <div style="text-align: center;">
+                        <h3 style="color: #06b6d4; margin-bottom: 2rem;">Hubungi Admin RanzCloud</h3>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <h4 style="color: #10b981; margin-bottom: 1rem;">WhatsApp</h4>
+                            <p>+62 838-3829-3767</p>
+                            <a href="https://wa.me/6283838293767" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 0.5rem;">Chat WhatsApp</a>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h4 style="color: #10b981; margin-bottom: 1rem;">Email</h4>
+                            <p>admin@ranzcloud.com</p>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h4 style="color: #10b981; margin-bottom: 1rem;">Discord</h4>
+                            <p>RanzCloud#1234</p>
+                        </div>
+
+                        <div>
+                            <h4 style="color: #10b981; margin-bottom: 1rem;">Jam Operasional</h4>
+                            <p>Senin - Minggu: 08:00 - 22:00 WIB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Modal -->
+        <div id="checkoutModal" class="hidden" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1002; display: flex; align-items: center; justify-content: center;">
+            <div style="background: rgba(30, 41, 59, 0.95); padding: 2rem; border-radius: 1rem; max-width: 500px; width: 90%; max-height: 90%; overflow-y: auto;">
+                <h3 style="color: #06b6d4; margin-bottom: 2rem; text-align: center;">Checkout</h3>
+                
+                <div id="checkoutProduct" style="margin-bottom: 2rem;">
+                    <!-- Product details will be shown here -->
+                </div>
+
+                <h4 style="color: #06b6d4; margin-bottom: 1rem;">Pilih Metode Pembayaran</h4>
+                <div id="paymentMethodsList" class="payment-methods">
+                    <!-- Payment methods will be loaded here -->
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="processPayment()" style="flex: 1;">Bayar Sekarang</button>
+                    <button class="btn btn-secondary" onclick="closeCheckout()">Batal</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let isAdmin = false;
+        let selectedPaymentMethod = null;
+        let checkoutProduct = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            loadProducts();
+            loadPaymentMethods();
+            loadOrders();
+            checkAuthStatus();
+            
+            // Event listeners
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+            document.getElementById('productForm').addEventListener('submit', handleProductSubmit);
+            document.getElementById('paymentForm').addEventListener('submit', handlePaymentSubmit);
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+
+        // Initialize default data
+        function initializeApp() {
+            // Initialize default products if not exists
+            if (!localStorage.getItem('products')) {
+                const defaultProducts = [
+                    {
+                        id: 1,
+                        name: 'Hosting SA-MP Basic',
+                        category: 'Hosting SA-MP',
+                        description: 'Hosting SA-MP dengan 100 slot player, MySQL database, dan uptime 99.9%',
+                        price: 50000
+                    },
+                    {
+                        id: 2,
+                        name: 'Hosting Bot JS Premium',
+                        category: 'Hosting Bot JS',
+                        description: 'Hosting untuk bot JavaScript/Node.js dengan RAM 1GB dan storage 10GB',
+                        price: 75000
+                    },
+                    {
+                        id: 3,
+                        name: 'VPS Linux 1GB',
+                        category: 'VPS',
+                        description: 'VPS Linux dengan 1GB RAM, 20GB SSD, dan bandwidth unlimited',
+                        price: 100000
+                    },
+                    {
+                        id: 4,
+                        name: 'Domain .com',
+                        category: 'Domain',
+                        description: 'Registrasi domain .com untuk 1 tahun dengan DNS management gratis',
+                        price: 150000
+                    },
+                    {
+                        id: 5,
+                        name: 'RDP Windows 2GB',
+                        category: 'RDP',
+                        description: 'Remote Desktop Windows dengan 2GB RAM dan akses 24/7',
+                        price: 200000
+                    }
+                ];
+                localStorage.setItem('products', JSON.stringify(defaultProducts));
+            }
+
+            // Initialize default payment methods if not exists
+            if (!localStorage.getItem('paymentMethods')) {
+                const defaultPayments = [
+                    { id: 1, name: 'DANA', number: '083838293767' },
+                    { id: 2, name: 'GoPay', number: '083827307622' },
+                    { id: 3, name: 'OVO', number: '083827307622' }
+                ];
+                localStorage.setItem('paymentMethods', JSON.stringify(defaultPayments));
+            }
+
+            // Initialize orders if not exists
+            if (!localStorage.getItem('orders')) {
+                localStorage.setItem('orders', JSON.stringify([]));
+            }
+
+            // Initialize chat messages if not exists
+            if (!localStorage.getItem('chatMessages')) {
+                const welcomeMessage = {
+                    id: 1,
+                    sender: 'admin',
+                    message: 'Selamat datang di RanzCloud! Ada yang bisa kami bantu?',
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('chatMessages', JSON.stringify([welcomeMessage]));
+            }
+        }
+
+        // Authentication functions
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Check admin credentials
+            if (username === 'Ranzcloud' && password === 'Ranzcloud') {
+                currentUser = { username: 'Admin', isAdmin: true };
+                isAdmin = true;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showNotification('Login berhasil sebagai Admin!');
+                updateAuthUI();
+                showPage('admin');
+                return;
+            }
+
+            // Check regular user credentials
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                currentUser = { username: user.username, isAdmin: false };
+                isAdmin = false;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showNotification('Login berhasil!');
+                updateAuthUI();
+                showPage('home');
+            } else {
+                showNotification('Username atau password salah!', 'error');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showNotification('Password tidak cocok!', 'error');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            if (users.find(u => u.username === username)) {
+                showNotification('Username sudah digunakan!', 'error');
+                return;
+            }
+
+            if (users.find(u => u.email === email)) {
+                showNotification('Email sudah digunakan!', 'error');
+                return;
+            }
+
+            const newUser = { username, email, password };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            showNotification('Registrasi berhasil! Silakan login.');
+            showPage('login');
+        }
+
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            showPage('home');
+            showNotification('Logout berhasil!');
+        }
+
+        function checkAuthStatus() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                isAdmin = currentUser.isAdmin;
+                updateAuthUI();
+            }
+        }
+
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            const navLinks = document.getElementById('navLinks');
+
+            if (currentUser) {
+                authButtons.innerHTML = `
+                    <span style="color: #06b6d4;">Halo, ${currentUser.username}</span>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                `;
+
+                if (isAdmin) {
+                    // Add admin link to navigation
+                    if (!document.querySelector('a[onclick="showPage(\'admin\')"]')) {
+                        const adminLi = document.createElement('li');
+                        adminLi.innerHTML = '<a href="#" onclick="showPage(\'admin\')">Admin</a>';
+                        navLinks.appendChild(adminLi);
+                    }
+                }
+            } else {
+                authButtons.innerHTML = `
+                    <a href="#" class="btn btn-secondary" onclick="showPage('login')">Login</a>
+                    <a href="#" class="btn btn-primary" onclick="showPage('register')">Daftar</a>
+                `;
+
+                // Remove admin link if exists
+                const adminLink = document.querySelector('a[onclick="showPage(\'admin\')"]');
+                if (adminLink) {
+                    adminLink.parentElement.remove();
+                }
+            }
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Load page-specific content
+            if (pageId === 'products') {
+                loadProducts();
+            } else if (pageId === 'chat') {
+                loadChatMessages();
+            } else if (pageId === 'admin' && !isAdmin) {
+                showNotification('Akses ditolak! Anda bukan admin.', 'error');
+                showPage('home');
+                return;
+            } else if (pageId === 'admin' && isAdmin) {
+                loadAdminData();
+            }
+
+            // Close mobile menu if open
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Product functions
+        function loadProducts() {
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            
+            // Load featured products (first 3) for home page
+            const featuredContainer = document.getElementById('featuredProducts');
+            if (featuredContainer) {
+                featuredContainer.innerHTML = products.slice(0, 3).map(product => createProductCard(product)).join('');
+            }
+
+            // Load all products for products page
+            const allContainer = document.getElementById('allProducts');
+            if (allContainer) {
+                allContainer.innerHTML = products.map(product => createProductCard(product)).join('');
+            }
+        }
+
+        function createProductCard(product) {
+            return `
+                <div class="product-card">
+                    <div class="product-category">${product.category}</div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                    <button class="btn btn-primary" onclick="openCheckout(${product.id})" style="width: 100%;">
+                        Beli Sekarang
+                    </button>
+                </div>
+            `;
+        }
+
+        // Admin functions
+        function showAdminTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.admin-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`admin-${tabName}`).classList.add('active');
+
+            // Load tab-specific data
+            if (tabName === 'products') {
+                loadAdminProducts();
+            } else if (tabName === 'payments') {
+                loadAdminPayments();
+            } else if (tabName === 'orders') {
+                loadAdminOrders();
+            }
+        }
+
+        function loadAdminData() {
+            loadAdminProducts();
+            loadAdminPayments();
+            loadAdminOrders();
+        }
+
+        function loadAdminProducts() {
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            const tbody = document.getElementById('adminProductsList');
+            
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>Rp ${product.price.toLocaleString('id-ID')}</td>
+                    <td>
+                        <button class="btn btn-warning btn-small" onclick="editProduct(${product.id})">Edit</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteProduct(${product.id})">Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showAddProductForm() {
+            document.getElementById('addProductForm').classList.remove('hidden');
+            document.getElementById('productForm').reset();
+            document.getElementById('editProductId').value = '';
+        }
+
+        function hideAddProductForm() {
+            document.getElementById('addProductForm').classList.add('hidden');
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            const editId = document.getElementById('editProductId').value;
+            
+            const productData = {
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                description: document.getElementById('productDescription').value,
+                price: parseInt(document.getElementById('productPrice').value)
+            };
+
+            if (editId) {
+                // Edit existing product
+                const index = products.findIndex(p => p.id == editId);
+                if (index !== -1) {
+                    products[index] = { ...products[index], ...productData };
+                }
+            } else {
+                // Add new product
+                const newId = Math.max(...products.map(p => p.id), 0) + 1;
+                products.push({ id: newId, ...productData });
+            }
+
+            localStorage.setItem('products', JSON.stringify(products));
+            loadAdminProducts();
+            loadProducts(); // Refresh main product display
+            hideAddProductForm();
+            showNotification(editId ? 'Produk berhasil diupdate!' : 'Produk berhasil ditambahkan!');
+        }
+
+        function editProduct(id) {
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            const product = products.find(p => p.id == id);
+            
+            if (product) {
+                document.getElementById('editProductId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productCategory').value = product.category;
+                document.getElementById('productDescription').value = product.description;
+                document.getElementById('productPrice').value = product.price;
+                showAddProductForm();
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Yakin ingin menghapus produk ini?')) {
+                const products = JSON.parse(localStorage.getItem('products') || '[]');
+                const filteredProducts = products.filter(p => p.id != id);
+                localStorage.setItem('products', JSON.stringify(filteredProducts));
+                loadAdminProducts();
+                loadProducts(); // Refresh main product display
+                showNotification('Produk berhasil dihapus!');
+            }
+        }
+
+        // Payment methods functions
+        function loadPaymentMethods() {
+            const payments = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+            
+            // Load for checkout modal
+            const checkoutContainer = document.getElementById('paymentMethodsList');
+            if (checkoutContainer) {
+                checkoutContainer.innerHTML = payments.map(payment => `
+                    <div class="payment-method" onclick="selectPaymentMethod(${payment.id})">
+                        <strong>${payment.name}</strong><br>
+                        <span style="opacity: 0.8;">${payment.number}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function loadAdminPayments() {
+            const payments = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+            const tbody = document.getElementById('adminPaymentsList');
+            
+            tbody.innerHTML = payments.map(payment => `
+                <tr>
+                    <td>${payment.name}</td>
+                    <td>${payment.number}</td>
+                    <td>
+                        <button class="btn btn-warning btn-small" onclick="editPayment(${payment.id})">Edit</button>
+                        <button class="btn btn-danger btn-small" onclick="deletePayment(${payment.id})">Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showAddPaymentForm() {
+            document.getElementById('addPaymentForm').classList.remove('hidden');
+            document.getElementById('paymentForm').reset();
+            document.getElementById('editPaymentId').value = '';
+        }
+
+        function hideAddPaymentForm() {
+            document.getElementById('addPaymentForm').classList.add('hidden');
+        }
+
+        function handlePaymentSubmit(e) {
+            e.preventDefault();
+            const payments = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+            const editId = document.getElementById('editPaymentId').value;
+            
+            const paymentData = {
+                name: document.getElementById('paymentName').value,
+                number: document.getElementById('paymentNumber').value
+            };
+
+            if (editId) {
+                // Edit existing payment method
+                const index = payments.findIndex(p => p.id == editId);
+                if (index !== -1) {
+                    payments[index] = { ...payments[index], ...paymentData };
+                }
+            } else {
+                // Add new payment method
+                const newId = Math.max(...payments.map(p => p.id), 0) + 1;
+                payments.push({ id: newId, ...paymentData });
+            }
+
+            localStorage.setItem('paymentMethods', JSON.stringify(payments));
+            loadAdminPayments();
+            loadPaymentMethods(); // Refresh checkout payment methods
+            hideAddPaymentForm();
+            showNotification(editId ? 'Metode pembayaran berhasil diupdate!' : 'Metode pembayaran berhasil ditambahkan!');
+        }
+
+        function editPayment(id) {
+            const payments = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+            const payment = payments.find(p => p.id == id);
+            
+            if (payment) {
+                document.getElementById('editPaymentId').value = payment.id;
+                document.getElementById('paymentName').value = payment.name;
+                document.getElementById('paymentNumber').value = payment.number;
+                showAddPaymentForm();
+            }
+        }
+
+        function deletePayment(id) {
+            if (confirm('Yakin ingin menghapus metode pembayaran ini?')) {
+                const payments = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+                const filteredPayments = payments.filter(p => p.id != id);
+                localStorage.setItem('paymentMethods', JSON.stringify(filteredPayments));
+                loadAdminPayments();
+                loadPaymentMethods(); // Refresh checkout payment methods
+                showNotification('Metode pembayaran berhasil dihapus!');
+            }
+        }
+
+        function selectPaymentMethod(id) {
+            // Remove previous selection
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.classList.remove('selected');
+            });
+
+            // Add selection to clicked method
+            event.target.closest('.payment-method').classList.add('selected');
+            selectedPaymentMethod = id;
+        }
+
+        // Checkout functions
+        function openCheckout(productId) {
+            if (!currentUser) {
+                showNotification('Silakan login terlebih dahulu!', 'error');
+                showPage('login');
+                return;
+            }
+
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            const product = products.find(p => p.id == productId);
+            
+            if (!product) {
+                showNotification('Produk tidak ditemukan!', 'error');
+                return;
+            }
+
+            checkoutProduct = product;
+            
+            // Show product details in checkout
+            document.getElementById('checkoutProduct').innerHTML = `
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 1rem; border-radius: 0.5rem;">
+                    <h4 style="color: #06b6d4;">${product.name}</h4>
+                    <p style="opacity: 0.8; margin: 0.5rem 0;">${product.description}</p>
+                    <p style="font-size: 1.2rem; font-weight: bold; color: #10b981;">
+                        Total: Rp ${product.price.toLocaleString('id-ID')}
+                    </p>
+                </div>
+            `;
+
+            loadPaymentMethods();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+            selectedPaymentMethod = null;
+            checkoutProduct = null;
+        }
+
+        function processPayment() {
+            if (!selectedPaymentMethod) {
+                showNotification('Pilih metode pembayaran terlebih dahulu!', 'error');
+                return;
+            }
+
+            if (!checkoutProduct) {
+                showNotification('Produk tidak valid!', 'error');
+                return;
+            }
+
+            // Create order
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const payments = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+            const paymentMethod = payments.find(p => p.id == selectedPaymentMethod);
+
+            const newOrder = {
+                id: Math.max(...orders.map(o => o.id), 0) + 1,
+                userId: currentUser.username,
+                productId: checkoutProduct.id,
+                productName: checkoutProduct.name,
+                price: checkoutProduct.price,
+                paymentMethod: paymentMethod.name,
+                paymentNumber: paymentMethod.number,
+                status: 'Pending',
+                date: new Date().toISOString()
+            };
+
+            orders.push(newOrder);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Send notification to Discord (simulated)
+            sendDiscordNotification(newOrder);
+
+            // Show success message
+            showNotification('Pesanan berhasil dibuat! Silakan lakukan pembayaran ke nomor yang tertera.');
+            
+            // Show payment instructions
+            alert(`Silakan transfer ke:\n${paymentMethod.name}: ${paymentMethod.number}\nJumlah: Rp ${checkoutProduct.price.toLocaleString('id-ID')}\n\nID Pesanan: ${newOrder.id}`);
+
+            closeCheckout();
+            loadOrders();
+        }
+
+        // Orders functions
+        function loadOrders() {
+            // This function can be used to load orders for user dashboard if needed
+        }
+
+        function loadAdminOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const tbody = document.getElementById('adminOrdersList');
+            
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td>#${order.id}</td>
+                    <td>${order.userId}</td>
+                    <td>${order.productName}</td>
+                    <td>Rp ${order.price.toLocaleString('id-ID')}</td>
+                    <td>
+                        <span style="color: ${order.status === 'Pending' ? '#f59e0b' : '#10b981'};">
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td>${new Date(order.date).toLocaleDateString('id-ID')}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Chat functions
+        function loadChatMessages() {
+            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+            const container = document.getElementById('chatMessages');
+            
+            container.innerHTML = messages.map(msg => `
+                <div class="chat-message ${msg.sender}">
+                    <strong>${msg.sender === 'admin' ? 'Admin' : msg.sender}:</strong>
+                    <p>${msg.message}</p>
+                    <small style="opacity: 0.7;">${new Date(msg.timestamp).toLocaleString('id-ID')}</small>
+                </div>
+            `).join('');
+
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendMessage() {
+            if (!currentUser) {
+                showNotification('Silakan login terlebih dahulu!', 'error');
+                showPage('login');
+                return;
+            }
+
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+            const newMessage = {
+                id: Math.max(...messages.map(m => m.id), 0) + 1,
+                sender: currentUser.username,
+                message: message,
+                timestamp: new Date().toISOString()
+            };
+
+            messages.push(newMessage);
+            localStorage.setItem('chatMessages', JSON.stringify(messages));
+
+            input.value = '';
+            loadChatMessages();
+
+            // Simulate admin auto-reply (for demo purposes)
+            if (!isAdmin) {
+                setTimeout(() => {
+                    const autoReply = {
+                        id: Math.max(...JSON.parse(localStorage.getItem('chatMessages') || '[]').map(m => m.id), 0) + 1,
+                        sender: 'admin',
+                        message: 'Terima kasih atas pesan Anda. Admin akan segera merespons.',
+                        timestamp: new Date().toISOString()
+                    };
+
+                    const updatedMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+                    updatedMessages.push(autoReply);
+                    localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+                    loadChatMessages();
+                }, 2000);
+            }
+        }
+
+        // Notification functions
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Discord webhook simulation
+        function sendDiscordNotification(order) {
+            // In a real application, this would send to an actual Discord webhook
+            console.log('Discord notification sent:', {
+                content: `🛒 **Pesanan Baru!**\n\n**ID:** #${order.id}\n**User:** ${order.userId}\n**Produk:** ${order.productName}\n**Total:** Rp ${order.price.toLocaleString('id-ID')}\n**Pembayaran:** ${order.paymentMethod} (${order.paymentNumber})\n**Tanggal:** ${new Date(order.date).toLocaleString('id-ID')}`
+            });
+            
+            // Show notification that Discord webhook was "sent"
+            showNotification('Notifikasi Discord terkirim!');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98bc79b952e33e56',t:'MTc1OTk5ODIwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
