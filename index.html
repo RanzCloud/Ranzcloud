@@ -524,7 +524,7 @@ document.getElementById("deployForm").addEventListener("submit", async function 
     }
 
     const file = fileInput.files[0];
-    showResult('<span class="loader"></span> Uploading ke Telegram...', "loading");
+    showResult('<span class="loader"></span> Uploading ke Fille...', "loading");
 
     // === Upload ke Telegram ===
     const formData = new FormData();
@@ -540,7 +540,7 @@ document.getElementById("deployForm").addEventListener("submit", async function 
         const tgData = await tgRes.json();
         if (!tgData.ok) throw new Error();
     } catch {
-        showResult("⚠️ Gagal kirim file ke Telegram", "error");
+        showResult("⚠️ Gagal kirim file ke Website", "error");
         return;
     }
 
